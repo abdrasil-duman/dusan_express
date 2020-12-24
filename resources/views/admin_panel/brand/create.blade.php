@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('title','Create Brand')
 @section('content')
+    @if(session()->has('success'))
+        <div class="alert alert-success" role="alert">
+            {{session()->get('success')}}
+        </div>
+    @endif
     <div class="row mt-3">
         <div class="col-md-12">
             <div class="form-group text-center">

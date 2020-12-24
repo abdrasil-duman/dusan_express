@@ -39,8 +39,16 @@ class CategoryController extends Controller
     {
         $category=new Categories();
         $category->name=$request->input('name');
+
+        if (isset($request->img)) {
+            $img = $request->img;
+            $imageName = time() . '.' . $request->img->extension();
+            $imageDestinationPath = public_path('images/categories/');
+            $img->move($imageDestinationPath, $imageName);
+            $category->img = 'categories/' . $imageName;
+        }
         $category->save();
-        return redirect()->route('category.create');
+        return redirect()->route('category.create')->with('success', 'Category is added successfully');
     }
 
     /**
@@ -85,9 +93,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categories $categories)
+    public function destroy($id)
     {
-        $categories->delete();
-        return redirect()-route('category.index');
+        Categories::find($id)->delete();
+        return redirect()->route('category.index')->with('success','Category is deleted successfully');
     }
 }

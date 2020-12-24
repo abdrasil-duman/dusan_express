@@ -40,7 +40,7 @@ class TagController extends Controller
         $tag=new Tag();
         $tag->name=$request->input('name');
         $tag->save();
-        return redirect()->route('tag.create');
+        return redirect()->route('tag.create')->with('success', 'Tag is added successfully');
     }
 
     /**
@@ -85,9 +85,9 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy($id)
     {
-        $tag->delete();
-        return redirect()-route('tag.index');
+        Tag::find($id)->delete();
+        return redirect()->route('tag.index')->with('success','Tag is deleted successfully');
     }
 }

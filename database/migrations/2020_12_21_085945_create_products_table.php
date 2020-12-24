@@ -21,17 +21,13 @@ class CreateProductsTable extends Migration
             $table->string('name', 255);
             $table->integer('price');
             $table->text('description');
+            $table->string('img');
             $table->string('status');
             $table->integer('rating')->nullable();
             $table->integer('reviews');
             $table->integer('quantity')->default(0);
         });
 
-        Schema::create('product_photos', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_id');
-            $table->string('photo');
-        });
 
     }
 

@@ -15,7 +15,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types=Tag::all();
+        $types=Type::all();
         return view('admin_panel.type.index', ['types'=>$types]);
     }
 
@@ -40,7 +40,7 @@ class TypeController extends Controller
         $type=new Type();
         $type->name=$request->input('name');
         $type->save();
-        return redirect()->route('type.create');
+        return redirect()->route('type.create')->with('success', 'Type is added successfully');
     }
 
     /**
@@ -85,9 +85,9 @@ class TypeController extends Controller
      * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Type $type)
+    public function destroy($id)
     {
-        $type->delete();
-        return redirect()-route('type.index');
+        Type::find($id)->delete();
+        return redirect()->route('type.index')->with('success','Type is deleted successfully');
     }
 }

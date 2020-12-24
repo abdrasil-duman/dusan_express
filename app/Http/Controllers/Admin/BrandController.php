@@ -40,7 +40,7 @@ class BrandController extends Controller
     {   $brand=new Brand();
         $brand->name=$request->input('name');
         $brand->save();
-        return redirect()->route('brand.create');
+        return redirect()->route('brand.create')->with('success', 'Brand is added successfully');
     }
 
     /**
@@ -85,9 +85,9 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return Response
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
-        $brand->delete();
-        return redirect()-route('brand.index');
+        Brand::find($id)->delete();
+        return redirect()->route('brand.index')->with('success','Brand is deleted successfully');
     }
 }

@@ -47,8 +47,15 @@ class ProductController extends Controller
         $product->quantity=$request->input('quantity');
         $product->category_id=$request->input('category_id');
         $product->brand_id=$request->input('brand_id');
+        if (isset($request->img)) {
+            $img = $request->img;
+            $imageName = time() . '.' . $request->img->extension();
+            $imageDestinationPath = public_path('images/products/');
+            $img->move($imageDestinationPath, $imageName);
+            $product->img = 'products/' . $imageName;
+        }
         $product->save();
-        return redirect()->route('product.create');
+        return redirect()->route('product.create')->with('success', 'Product is added successfully');
     }
 
     /**
@@ -59,7 +66,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('admin_panel.products.details',['product'=>$product]);
     }
 
     /**
@@ -88,11 +95,12 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector|string
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        Product::find($id)->delete();
+        return redirect()->route('product.index')->with('success','Product is deleted successfully');
     }
 }

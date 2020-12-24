@@ -43,19 +43,29 @@ class BlogController extends Controller
        $post->text=$request->input('text');
        $post->type_id=$request->input('type_id');
         $post->tag_id=$request->input('tag_id');
+        if (isset($request->img)) {
+            $img = $request->img;
+            $imageName = time() . '.' . $request->img->extension();
+            $imageDestinationPath = public_path('images/posts/');
+            $img->move($imageDestinationPath, $imageName);
+            $post->img = 'posts/' . $imageName;
+        }
+        if (!is_null($post->img)) {
+            File::delete($post->img);
+        }
         $post->save();
-        return redirect()->route('blog.create');
+        return redirect()->route('blog.create')->with('success', 'Post is added successfully');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Posts  $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function show(Posts $post)
-    {
-       return view('admin_panel.blog.details',['post'=>$post]);
+    public function show($id)
+    { $post=new Posts();
+       return view('admin_panel.blog.details',['post'=>$post->find($id)]);
     }
 
     /**
@@ -82,19 +92,32 @@ class BlogController extends Controller
         $post->text=$request->input('text');
         $post->type_id=$request->input('type_id');
         $post->tag_id=$request->input('tag_id');
+        if (isset($request->img)) {
+            $img = $request->img;
+            $imageName = time() . '.' . $request->img->extension();
+            $imageDestinationPath = public_path('images/posts/');
+            $img->move($imageDestinationPath, $imageName);
+            $post->img = 'posts/' . $imageName;
+        }
+        if (!is_null($post->img)) {
+            File::delete($post->img);
+        }
         $post->save();
-        return redirect()->route('blog.edit');
+        return redirect()->route('blog.edit')->with('success', 'Post is updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Posts  $posts
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector|string
      */
-    public function destroy(Posts $post)
+    public function destroy($id)
     {
-        $post->delete();
-        return redirect()-route('blog.index');
+        Posts::find($id)->delete();
+        if (!is_null(Posts::find($id)->img)) {
+            File::delete(Posts::find($id)->img);
+        }
+        return redirect()->route('blog.index')->with('success','Post is deleted successfully');
     }
 }
