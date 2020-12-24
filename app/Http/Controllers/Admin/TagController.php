@@ -72,11 +72,11 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
-    {
+    public function update(Request $request,$id)
+    {    $tag=Tag::find($id);
         $tag->name=$request->input('name');
         $tag->save();
-        return redirect()->route('tag.edit');
+        return redirect()->route('tag.show',$tag)->with('success','Tag is updated successfully');
     }
 
     /**

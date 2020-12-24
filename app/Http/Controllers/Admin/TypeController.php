@@ -72,11 +72,11 @@ class TypeController extends Controller
      * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Type $type)
-    {
+    public function update(Request $request,$id)
+    {    $type=Type::find($id);
         $type->name=$request->input('name');
         $type->save();
-        return redirect()->route('type.edit');
+        return redirect()->route('type.show',$type)->with('success','Type is updated successfully');
     }
 
     /**

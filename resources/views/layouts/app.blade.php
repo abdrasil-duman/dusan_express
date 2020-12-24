@@ -84,16 +84,16 @@
                                 {{ Auth::user()->name }}
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ ('Logout') }}
                                 </a>
                                 <a class="dropdown-item" href="{{route('profile.index')}}">My account</a>
-                                @if('role:admin')
+
                                     <a class="dropdown-item" href="{{route('index')}}">Admin panel</a>
-                                    @endif
+
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>

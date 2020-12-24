@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -24,8 +25,10 @@ class HomeController extends Controller
      */
 
     public function welcome()
-    {
-        return view('welcome');
+    { $categories=Categories::all();
+        return view('welcome',
+        ['categories'=>$categories,
+            ]);
     }
     public function about_us()
     {

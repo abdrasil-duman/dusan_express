@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Posts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use voku\helper\ASCII;
 use function React\Promise\reduce;
 
@@ -50,9 +51,7 @@ class BlogController extends Controller
             $img->move($imageDestinationPath, $imageName);
             $post->img = 'posts/' . $imageName;
         }
-        if (!is_null($post->img)) {
-            File::delete($post->img);
-        }
+
         $post->save();
         return redirect()->route('blog.create')->with('success', 'Post is added successfully');
     }
@@ -86,8 +85,8 @@ class BlogController extends Controller
      * @param  \App\Models\Posts  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Posts $post)
-    {
+    public function update(Request $request, $id)
+    {   $post=Posts::find($id);
         $post->title=$request->input('title');
         $post->text=$request->input('text');
         $post->type_id=$request->input('type_id');
@@ -103,7 +102,7 @@ class BlogController extends Controller
             File::delete($post->img);
         }
         $post->save();
-        return redirect()->route('blog.edit')->with('success', 'Post is updated successfully');
+        return redirect()->route('blog.show',$post)->with('success', 'Post is updated successfully');
     }
 
     /**
@@ -115,9 +114,9 @@ class BlogController extends Controller
     public function destroy($id)
     {
         Posts::find($id)->delete();
-        if (!is_null(Posts::find($id)->img)) {
-            File::delete(Posts::find($id)->img);
-        }
+//        if (!is_null(Posts::find($id)->img)) {
+//            File::delete(Posts::find($id)->img);
+//        }
         return redirect()->route('blog.index')->with('success','Post is deleted successfully');
     }
 }

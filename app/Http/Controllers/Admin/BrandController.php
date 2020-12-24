@@ -72,11 +72,11 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return Response
      */
-    public function update(Request $request, Brand $brand)
-    {
+    public function update(Request $request,$id)
+    {  $brand=Brand::find($id);
         $brand->name=$request->input('name');
         $brand->save();
-        return redirect()->route('brand.edit');
+        return redirect()->route('brand.show',$brand)->with('success', 'Brand is updated successfully');
     }
 
     /**

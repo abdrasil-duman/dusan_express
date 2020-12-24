@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -87,9 +88,29 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
-    {
-        //
+    public function update(Request $request, $id)
+    {   $product=Product::find($id);
+        $product->name=$request->input('name');
+        $product->price=$request->input('price');
+        $product->description=$request->input('description');
+        $product->status=$request->input('status');
+        $product->rating=$request->input('rating');
+        $product->reviews=$request->input('reviews');
+        $product->quantity=$request->input('quantity');
+        $product->category_id=$request->input('category_id');
+        $product->brand_id=$request->input('brand_id');
+        if (isset($request->img)) {
+            $img = $request->img;
+            $imageName = time() . '.' . $request->img->extension();
+            $imageDestinationPath = public_path('images/products/');
+            $img->move($imageDestinationPath, $imageName);
+            $product->img = 'products/' . $imageName;
+        }
+        if (!is_null($product->img)) {
+            File::delete($product->img);
+        }
+        $product->save();
+        return redirect()->route('product.show',$product)->with('success', 'Product is updated successfully');
     }
 
     /**

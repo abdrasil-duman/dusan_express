@@ -80,11 +80,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categories $categories)
-    {
+    public function update(Request $request, $id)
+    {   $categories=Categories::find($id);
         $categories->name=$request->input('name');
         $categories->save();
-        return redirect()->route('category.edit');
+        return redirect()->route('category.show',$categories)->with('success', 'Category is updated successfully');
     }
 
     /**
