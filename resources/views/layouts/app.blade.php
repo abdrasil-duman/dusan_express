@@ -60,6 +60,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand" href="{{route('welcome')}}"><img src="images/logo.png" class="logo" alt=""></a>
+
             </div>
             <!-- End Header Navigation -->
 
@@ -91,9 +92,9 @@
                                     {{ ('Logout') }}
                                 </a>
                                 <a class="dropdown-item" href="{{route('profile.index')}}">My account</a>
-
+                                @if('role:admin')
                                     <a class="dropdown-item" href="{{route('index')}}">Admin panel</a>
-
+                                @endif
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
@@ -102,7 +103,8 @@
                     @endguest
                     <li class="nav-item active"><a class="nav-link" href="{{route('welcome')}}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{route('about_us')}}">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('shop')}}">Shop</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('cartIndex')}}">Cart</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -110,42 +112,11 @@
             <!-- Start Atribute Navigation -->
             <div class="attr-nav">
                 <ul>
-                    <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                    <li class="side-menu"><a href="#">
-                            <i class="fa fa-shopping-bag"></i>
-                            <span class="badge">3</span>
-                        </a></li>
-                </ul>
+
             </div>
             <!-- End Atribute Navigation -->
         </div>
         <!-- Start Side Menu -->
-        <div class="side">
-            <a href="#" class="close-side"><i class="fa fa-times"></i></a>
-            <li class="cart-box">
-                <ul class="cart-list">
-                    <li>
-                        <a href="#" class="photo"><img src="images/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
-                        <h6><a href="#">Delica omtantur </a></h6>
-                        <p>1x - <span class="price">$80.00</span></p>
-                    </li>
-                    <li>
-                        <a href="#" class="photo"><img src="images/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
-                        <h6><a href="#">Omnes ocurreret</a></h6>
-                        <p>1x - <span class="price">$60.00</span></p>
-                    </li>
-                    <li>
-                        <a href="#" class="photo"><img src="images/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
-                        <h6><a href="#">Agam facilisis</a></h6>
-                        <p>1x - <span class="price">$40.00</span></p>
-                    </li>
-                    <li class="total">
-                        <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                        <span class="float-right"><strong>Total</strong>: $180.00</span>
-                    </li>
-                </ul>
-            </li>
-        </div>
         <!-- End Side Menu -->
     </nav>
     <!-- End Navigation -->
@@ -153,15 +124,7 @@
 <!-- End Main Top -->
 
 <!-- Start Top Search -->
-<div class="top-search">
-    <div class="container">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-search"></i></span>
-            <input type="text" class="form-control" placeholder="Search">
-            <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-        </div>
-    </div>
-</div>
+<
 <!-- End Top Search -->
 
 @yield('content')
@@ -173,30 +136,21 @@
             <div class="row">
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-widget">
-                        <h4>About ThewayShop</h4>
+                        <h4>About DuSan Express</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                         </p>
-                        <ul>
-                            <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
-                        </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-link">
                         <h4>Information</h4>
                         <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Customer Service</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Delivery Information</a></li>
+                            <li><a href="{{route('about_us')}}">About Us</a></li>
+{{--                            <li><a href="#">Customer Service</a></li>--}}
+{{--                            <li><a href="#">Our Sitemap</a></li>--}}
+{{--                            <li><a href="#">Terms &amp; Conditions</a></li>--}}
+{{--                            <li><a href="#">Privacy Policy</a></li>--}}
+{{--                            <li><a href="#">Delivery Information</a></li>--}}
                         </ul>
                     </div>
                 </div>
@@ -205,13 +159,15 @@
                         <h4>Contact Us</h4>
                         <ul>
                             <li>
-                                <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 3756 <br>Preston Street Wichita,<br> KS 67213 </p>
+                                <p><i class="fas fa-map-marker-alt"></i>Address: Kazakhstan,Almaty</p>
                             </li>
                             <li>
-                                <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
+                                <p><i class="fas fa-phone-square"></i>Duman's Whatsapp: <a href="https://wa.me/87086529646">87086529646</a></p>
+                                <p><i class="fas fa-phone-square"></i>Sanzhar's Whatsapp: <a href="https://wa.me/87757715130">87757715130</a></p>
                             </li>
                             <li>
-                                <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                <p><i class="fas fa-envelope"></i>Write to Duman's email: <a href="mailto:abdrasil.duman@yandex.ru">abdrasil.duman@yandex.ru</a></p>
+                                <p><i class="fas fa-envelope"></i>Write to Sanzhar's email: <a href="mailto:sultanbekovsanzhar704@gmail.com">sultanbekovsanzhar704@gmail.com</a></p>
                             </li>
                         </ul>
                     </div>
@@ -223,8 +179,6 @@
 <!-- End Footer  -->
 
 
-
-<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
 <!-- ALL JS FILES -->
 <script src="js/jquery-3.2.1.min.js"></script>

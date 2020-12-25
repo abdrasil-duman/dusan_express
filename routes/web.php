@@ -23,6 +23,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
 Route::get('/about_us',[App\Http\Controllers\HomeController::class,'about_us'])->name('about_us');
+Route::get('/shop',[App\Http\Controllers\HomeController::class,'shop'])->name('shop');
+Route::get('/product_info{id}',[App\Http\Controllers\HomeController::class,'product_info'])->name('product_info');
+Route::get('/cart', [App\Http\Controllers\CartController::class,'cartIndex'])->name('cartIndex');
+Route::get('/add-to-cart/{id}', [App\Http\Controllers\CartController::class,'addToCart'])->name('addToCart');
+Route::get('/removecart/{id}', [App\Http\Controllers\CartController::class,'removecart'])->name('removecart');
+Route::get('/productbycategory/{id}', [App\Http\Controllers\HomeController::class,'productbycategory'])->name('productbycategory');
+
 Auth::routes();
 
 Route::resource('/profile',ProfileController::class);

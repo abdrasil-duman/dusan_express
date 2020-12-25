@@ -139,6 +139,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Darryldecode\Cart\CartServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
@@ -228,7 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
     ],
 
 ];
